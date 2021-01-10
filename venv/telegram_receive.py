@@ -5,12 +5,17 @@ import pymysql
 my_token = '1528268221:AAFJZkjDJT_Mw21OAnupbMrX4rSLgc0reJk'
 bot = telegram.Bot(token = my_token)
 
-#업데이트
-updates = bot.getUpdates(offset=0)
-
 # 디비 연결
 conn = pymysql.connect(host='115.68.177.249', user='e3hope', password='ds64079376*', db='SN', charset='utf8')
 cursor = conn.cursor()
+
+# 마지막 업데이트목록
+lastupdatesql = 'SELECT update_id FROM Lastupdate'
+cursor.execute(lastupdatesql)
+offset = cursor.fetchone()
+
+#업데이트
+updates = bot.getUpdates(offset=offset[0])
 
 # 데이터 입력
 for u in updates :
@@ -43,4 +48,9 @@ for u in updates :
         bot.sendMessage(chat_id=u.message.chat.id, text='링크상태가 변경되었습니다.')
         conn.commit()
 
+# 메세지 저장
+if updates :
+    updatesql = 'UPDATE Lastupdate SET update_id = %s'
+    cursor.execute(updatesql, updates[-1]['update_id'])
+    conn.commit()
 conn.close()
