@@ -19,6 +19,10 @@ updates = bot.getUpdates(offset=offset[0])
 
 # 데이터 입력
 for u in updates :
+    
+    # 남아있는 데이터 넘기기
+    if u['update_id'] == offset[0] :
+        continue
 
     # 회원 입력
     if u.message.text == '/start' :
