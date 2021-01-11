@@ -13,7 +13,7 @@ cursor = conn.cursor()
 data = []
 
 # 크롤링
-webpage = requests.get('https://www.fmkorea.com/index.php?mid=football_news&category=61521788')
+webpage = requests.get('https://www.fmkorea.com/index.php?mid=football_news')
 soup = BeautifulSoup(webpage.content, 'html.parser')
 
 # 최근 업데이트 목록 호출
