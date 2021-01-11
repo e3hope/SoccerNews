@@ -36,12 +36,11 @@ for d in data :
         if d.select_one('.time').get_text().replace('\t', '') >= date.strftime('%H:%m') :
             date = date - timedelta(1)
 
-
         # 입력한 데이터일 경우 추가 X
-        if result[0] in d.select_one('.hx').get_text() :
+        if result[0] in d.select_one('.hotdeal_var8 > a').get_text() :
             break
-        temp.append(d.select_one('.hx').get_text().replace('\t', ''))
-        temp.append(d.select_one('.hx')['href'])
+        temp.append(d.select_one('.hotdeal_var8 > a').get_text().replace('\t', ''))
+        temp.append(d.select_one('.hotdeal_var8 > a')['href'])
         temp.append(date.strftime('%Y-%m-%d') + ' ' + d.select_one('.time').get_text().replace('\t', ''))
         insert_data.append(temp)
 
