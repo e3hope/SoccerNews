@@ -17,9 +17,9 @@ webpage = requests.get('https://www.fmkorea.com/index.php?mid=football_news')
 soup = BeautifulSoup(webpage.content, 'html.parser')
 
 # 최근 업데이트 목록 호출
-sql = 'select title from Scrap ORDER BY idx DESC LIMIT 1'
-cursor.execute(sql)
-result = cursor.fetchone()
+# sql = 'select title from Scrap ORDER BY idx DESC LIMIT 1'
+# cursor.execute(sql)
+# result = cursor.fetchone()
 
 # 데이터 정리
 data = soup.select('tr:not(.notice)')
@@ -36,8 +36,11 @@ for d in data :
         if d.select_one('.time').get_text().replace('\t', '') >= date.strftime('%H:%m') :
             date = date - timedelta(1)
 
+        # 1시간 주기로 크롤링
+        if (datetime.datetime.now() - datetime.timedelta(hours = 1)).strftime('%H:%m') > d.select_one('.time').get_text().replace('\t', '') :
+
         # 입력한 데이터일 경우 추가 X
-        if result[0] in d.select_one('.hotdeal_var8 > a').get_text() :
+        # if result[0] in d.select_one('.hotdeal_var8 > a').get_text() :
             break
         temp.append(d.select_one('.hotdeal_var8 > a').get_text().replace('\t', ''))
         temp.append(d.select_one('.hotdeal_var8 > a')['href'])
