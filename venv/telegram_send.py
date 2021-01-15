@@ -20,12 +20,13 @@ for u in userresult :
 
     # 공백 제거
     keyword = u[1].replace('\s', '')
-    print(keyword)
+
+    #키워드 정리
     if keyword :
         operator = re.findall('\&|\|', keyword)  # 특수문자
         keyword = re.findall('[ㄱ-ㅎㅏ-ㅣ가-힣a-zA-Z0-9]+', keyword)
 
-    # sql에 맞게 키워드 정리
+    # 키워드 정리
     if keyword :
         insert_data = [u[2]]
         for i in range(0,len(keyword)) :
