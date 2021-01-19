@@ -37,7 +37,7 @@ for d in data :
         #     date = date - timedelta(1)
 
         # 1시간 주기로 크롤링
-        if (datetime.datetime.now() - datetime.timedelta(hours = 1)).strftime('%H:%m') > d.select_one('.time').get_text().replace('\t', '') :
+        if (date - datetime.timedelta(hours = 1)).strftime('%H:%M') <= d.select_one('.time').get_text().replace('\t', '') :
             temp.append(d.select_one('.hotdeal_var8 > a').get_text().replace('\t', ''))
             temp.append(d.select_one('.hotdeal_var8 > a')['href'])
             temp.append(date.strftime('%Y-%m-%d') + ' ' + d.select_one('.time').get_text().replace('\t', ''))
@@ -47,7 +47,7 @@ for d in data :
 
 #데이터 입력
 for insert in reversed(insert_data) :
-    sql = 'INSERT INTO Scrap (title,link,date) VALUES(%s,%s,%s)'
+    sql = 'INSERT INTO Scrap (title,link,date) VALUES (%s,%s,%s)'
     cursor.execute(sql, (insert))
     conn.commit()
 conn.close()
