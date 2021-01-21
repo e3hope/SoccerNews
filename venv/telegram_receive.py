@@ -41,7 +41,6 @@ for u in updates :
     # 도움말
     elif u.message.text == '/help' :
         bot.sendMessage(chat_id=u.message.chat.id, text='@keyword를 입력해 주세요. ex)@리버풀\n'
-                        '&입력시 같은단어가 입력된 기사를읽을 수 있습니다 ex)@리버풀&이적\n'
                         '|입력시 다른기사도 확인 할 수 있습니다. ex)@리버풀|맨유\n'
                         '/link입력시 기사의 원문 링크도 확인 할 수 있습니다.')
 

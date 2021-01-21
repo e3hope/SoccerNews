@@ -2,6 +2,7 @@ import requests
 import pymysql
 import re
 import datetime
+import telegram_send as ts
 from datetime import timedelta
 from bs4 import BeautifulSoup
 
@@ -37,17 +38,19 @@ for d in data :
         #     date = date - timedelta(1)
 
         # 1시간 주기로 크롤링
-        if (date - datetime.timedelta(hours = 1)).strftime('%H:%M') <= d.select_one('.time').get_text().replace('\t', '') :
+        ago_time = '23:00' if date.strftime('%H') == '00' else (date - datetime.timedelta(hours = 1)).strftime('%H:%M')
+
+        if ago_time <= d.select_one('.time').get_text().replace('\t', ''):
             temp.append(d.select_one('.hotdeal_var8 > a').get_text().replace('\t', ''))
             temp.append(d.select_one('.hotdeal_var8 > a')['href'])
-            temp.append(date.strftime('%Y-%m-%d') + ' ' + d.select_one('.time').get_text().replace('\t', ''))
+            # temp.append(date.strftime('%Y-%m-%d') + ' ' + d.select_one('.time').get_text().replace('\t', ''))
             insert_data.append(temp)
         # 입력한 데이터일 경우 추가 X
         # if result[0] in d.select_one('.hotdeal_var8 > a').get_text() :
-
+ts.send(insert_data)
 #데이터 입력
-for insert in reversed(insert_data) :
-    sql = 'INSERT INTO Scrap (title,link,date) VALUES (%s,%s,%s)'
-    cursor.execute(sql, (insert))
-    conn.commit()
-conn.close()
+# for insert in reversed(insert_data) :
+#     sql = 'INSERT INTO Scrap (title,link,date) VALUES (%s,%s,%s)'
+#     cursor.execute(sql, (insert))
+#     conn.commit()
+# conn.close()
