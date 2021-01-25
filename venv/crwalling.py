@@ -7,7 +7,7 @@ from datetime import timedelta
 from bs4 import BeautifulSoup
 
 # 디비연결
-conn = pymysql.connect(host='115.68.177.249', user='e3hope', password='ds64079376*', db='SN', charset='utf8')
+conn = pymysql.connect(host='localhost', user='e3hope', password='ds64079376*', db='SN', charset='utf8',port=3306)
 cursor = conn.cursor()
 
 # 변수할당

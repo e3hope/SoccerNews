@@ -6,7 +6,7 @@ my_token = '1528268221:AAFJZkjDJT_Mw21OAnupbMrX4rSLgc0reJk'
 bot = telegram.Bot(token = my_token)
 
 # 디비 연결
-conn = pymysql.connect(host='115.68.177.249', user='e3hope', password='ds64079376*', db='SN', charset='utf8')
+conn = pymysql.connect(host='localhost', user='e3hope', password='ds64079376*', db='SN', charset='utf8')
 cursor = conn.cursor()
 
 # 마지막 업데이트목록
